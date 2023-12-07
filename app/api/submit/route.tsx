@@ -1,5 +1,6 @@
 import prisma from "../../../lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import Batch from '../../model/batch';
 
 const getSubmitedDate = function() {
   return new Date().toLocaleDateString().replaceAll('/', '');
@@ -28,6 +29,17 @@ export async function POST(request: Request) {
       machine_number: machineNumber.toString(),
     }
   })
+
+  if (insertData) {
+    const batch = new Batch({
+      model: insertData.model,
+      quantity: insertData.quantity,
+      submitedDate: submitedDate,
+      randomNumber: randomNumber
+    })
+    console.log('creatd batch', batch)
+    console.log('machine numbers', batch.getMachineNumbers())
+  }
 
   return NextResponse.json({
     code: 200,
