@@ -18,4 +18,5 @@ model Batch {
   license_level   Int
   comment_message String?
   createdAt       DateTime   @default(now())
+  machine_number  String    
 }
